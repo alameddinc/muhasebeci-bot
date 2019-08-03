@@ -1,0 +1,32 @@
+{
+  "name": "butcehesapbot",
+  "version": "0.1.0",
+  "description": "Bütçe Hesaplarını tutan Telegram Botu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --presets es2015 -d lib/ src"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alameddince/muhasebeci-bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Alameddin Çelik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alameddince/muhasebeci-bot/issues"
+  },
+  "homepage": "https://github.com/alameddince/muhasebeci-bot#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
