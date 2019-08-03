@@ -43,7 +43,7 @@ const selectDesctription = (message, actionKeyCount) => {
 }
 const parsingVar = (typeVar, val) => {
     if (typeVar == "float") {
-        return parseFloat(val.match(/\d*.(\d)+/g));
+        return parseFloat(val.match(/\d*.?(\d)+/g));
     } else if (typeVar == "int") {
         return parseInt(val.match(/\d+/g));
     }
