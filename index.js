@@ -146,6 +146,8 @@ MongoClient.connect(url, function (err, db) {
                 }
             } else if (msg.text.toLowerCase().includes("ödeme") || msg.text.toLowerCase().includes("odeme")) {
                 sendBotMessage(msg.chat.id, "*Ödeme \[Tutar\] \[Açıklama\]* ile harcama ekleyebilirsiniz. şu anki tüm yeteneklerim için *yardım* yazabilirsiniz " + hitap +".", opts);
+            } else if (msg.text.toLowerCase().includes("arzu") || msg.text.toLowerCase().includes("var")) {
+                sendBotMessage(msg.chat.id, "Arzunuz nedir" + hitap +"?", opts);
             } else if (msg.text.toLowerCase().includes("iade") || msg.text.toLowerCase().includes("ıade")) {
                 sendBotMessage(msg.chat.id, "*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. şu anki tüm yeteneklerim için *yardım* yazabilirsiniz " + hitap +".", opts)
             } else if (msg.text.toLowerCase().includes("günlük") || msg.text.toLowerCase().includes("gunluk") || msg.text.toLowerCase().includes("rapor")) {
