@@ -34,13 +34,11 @@ const isToday = (someDate) => {
 }
 const selectDesctription = (message, actionKeyCount) => {
     let description = "";
-    console.log(message);
     if (message[actionKeyCount].toLowerCase().trim() != "tl") {
         description = message.slice(actionKeyCount);
     } else {
         description = message.slice(actionKeyCount + 1);
     }
-    console.log(description);
     return description.join(" ");
 }
 const parsingVar = (typeVar, val) => {
@@ -97,7 +95,6 @@ MongoClient.connect(url, function (err, db) {
                     };
                     dbo.collection("wallets").insertOne(walletObj, (err, result) => {
                         if (err) throw err;
-                        console.log("Added a new wallet for " + walletObj.username);
                     });
 
                 }
@@ -180,28 +177,23 @@ MongoClient.connect(url, function (err, db) {
         } else if ((msg.text.toLowerCase()).includes("test-sil")) {
             dbo.collection('messages').deleteMany({}, (err, result) => {
                 if (err) throw  err;
-                console.log("Deleted All Messages");
             });
             dbo.collection('customers').deleteMany({}, (err, result) => {
                 if (err) throw  err;
-                console.log("Deleted All Customers");
             });
             dbo.collection('installments').deleteMany({}, (err, result) => {
                 if (err) throw  err;
-                console.log("Deleted All installments");
             });
             dbo.collection('transactions').deleteMany({}, (err, result) => {
                 if (err) throw  err;
-                console.log("Deleted All transactions");
             });
             dbo.collection('transactionDetails').deleteMany({}, (err, result) => {
                 if (err) throw  err;
-                console.log("Deleted All transactionDetails");
             });
 
 
         } else if ((msg.text.toLowerCase()).includes("test")) {
-            dbo.collection('messages').find({}).toArray((err, result) => {
+            dbo.collection('customers').find({}).toArray((err, result) => {
                 if (err) throw err;
                 console.log(result)
             })
@@ -211,7 +203,6 @@ MongoClient.connect(url, function (err, db) {
             if (action == "fatura" && testVersion) {
                 //telefon faturanız eklendi
             }else if(action == "hitap"){
-                console.log("hitap ayarları")
                 const action2 = keys[1]
                 const query = { username: myobj.username };
                 const values = { $set: {"hitap": action2} };
@@ -241,7 +232,6 @@ MongoClient.connect(url, function (err, db) {
                             description: description
                         }
 
-                        console.log(installmentObj);
 
                         dbo.collection("wallets").find({
                             username: installmentObj.username,
@@ -263,7 +253,6 @@ MongoClient.connect(url, function (err, db) {
                                 };
                                 dbo.collection("installmentPays").insertOne(incrementPayObj, (err, result) => {
                                     if (err) throw err;
-                                    console.log("Taksit Ödendi")
                                 })
                             }
                         })
@@ -273,7 +262,6 @@ MongoClient.connect(url, function (err, db) {
                         break;
                     case "listele":
                         dbo.collection("installments").find().toArray((err, result) => {
-                            console.log(result);
                         });
                         break;
                 }
@@ -314,12 +302,9 @@ MongoClient.connect(url, function (err, db) {
                     "createdDate.month" : today.getMonth(),
                     "createdDate.year" : today.getFullYear(),
                 };
-                console.log(transactionObj);
-                console.log(searchObj);
 
                 // List Transactions
                 dbo.collection("transactions").find(searchObj).toArray((err, result) => {
-                    console.log(result);
                     result.map(t => {
                         totalCount += t.amount
                     })
@@ -346,13 +331,11 @@ MongoClient.connect(url, function (err, db) {
                 // Add Transaction
                 dbo.collection("transactions").insertOne(transactionObj, (err, result) => {
                     if (err) throw err;
-                    console.log("Back a transaction");
                 });
 
                 // Add Transaction
                 dbo.collection("transactionDetails").insertOne(transactionObjDetails, (err, result) => {
                     if (err) throw err;
-                    console.log("Back a transaction");
                 });
 
                 const searchObj = {
@@ -363,7 +346,6 @@ MongoClient.connect(url, function (err, db) {
                 };
 
                 dbo.collection("transactions").find(searchObj).toArray((err, result) => {
-                    console.log(result);
                     result.map(t => {
                         totalCount += t.amount
                     })
@@ -374,7 +356,6 @@ MongoClient.connect(url, function (err, db) {
                 const who = parsingVar("int", keys[1]);
                 const description = selectDesctription(keys, 1);
                 dbo.collection("customers").find({username: transactionObj.username}).toArray((err, result) => {
-                    console.log(result)
                     //sendBotMessage(result.find(), description);
 
                 })
@@ -388,7 +369,6 @@ MongoClient.connect(url, function (err, db) {
                 dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
                     let data = "";
                     let total = 0;
-                    console.log(result);
                     result.map(t => {
                         data += (t.description).trim(" ") + " " + t.amount + "TL\n";
                         total += t.amount;
