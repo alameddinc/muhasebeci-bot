@@ -139,7 +139,7 @@ MongoClient.connect(url, function (err, db) {
                 } else if (msg.text.toLowerCase().includes("olusturmak") || msg.text.toLowerCase().includes("oluşturmak") || msg.text.toLowerCase().includes("ekle")) {
                     sendBotMessage(msg.chat.id, "*taksit ekle \[Kaç Ay\] \[Aylık Tutar\] \[Aylık Ödeme Günü\] \[Açıklama\]* şeklinde yazarsanız taksit oluşturabilirsiniz.", opts);
                 } else {
-                    sendBotMessage(msg.chat.id, "*taksit ödemek \[taksit-id\] şeklinde yazarsanız bu ayın taksidini ödediğinizi söyleyebilirsiniz.", opts);
+                    sendBotMessage(msg.chat.id, "*taksit ödemek \[taksit-id\] şeklinde yazarsanız bu günın taksidini ödediğinizi söyleyebilirsiniz.", opts);
                 }
             } else if (msg.text.toLowerCase().includes("ödeme") || msg.text.toLowerCase().includes("odeme")) {
                 sendBotMessage(msg.chat.id, "*Ödeme \[Tutar\] \[Açıklama\]* ile harcama ekleyebilirsiniz. şu anki tüm yeteneklerim için *yardım* yazabilirsiniz " + hitap +".", opts);
@@ -308,7 +308,7 @@ MongoClient.connect(url, function (err, db) {
                     result.map(t => {
                         totalCount += t.amount
                     })
-                    sendBotMessage(myobj.chatid, "Ekledim " + myobj.hitap + ",Bu ay toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
+                    sendBotMessage(myobj.chatid, "Ekledim " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
                 });
 
             } else if (action == "iade" || action == "ıade") {
@@ -349,7 +349,7 @@ MongoClient.connect(url, function (err, db) {
                     result.map(t => {
                         totalCount += t.amount
                     })
-                    sendBotMessage(myobj.chatid, "İade aldım " + myobj.hitap + ",Bu ay toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
+                    sendBotMessage(myobj.chatid, "İade aldım " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
                 });
 
             } else if (action == "soyleona") {
