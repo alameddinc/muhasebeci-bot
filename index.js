@@ -122,6 +122,9 @@ MongoClient.connect(url, function (err, db) {
             let message = "*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n";
             message += "*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \n";
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
+            message += "*Sepet ekle \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize ürün ekleyip kasada süpriz fiyatlar ile karşılaşmazsınız.\n";
+            message += "*Sepet çıkar \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize eklediğiniz ürünleri bırakınca fiyattan düşersiniz.\n";
+            message += "*Sepet boşalt* ile alışveriş sepetinizi boşatabilirsiniz.\n";
             message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
             sendBotMessage(msg.chat.id, message, opts);
         } else if (msg.text.toLowerCase().includes("sepet") || keys[0].toLowerCase() == "s") {
