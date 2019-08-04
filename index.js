@@ -34,12 +34,16 @@ const isToday = (someDate) => {
 }
 const selectDesctription = (message, actionKeyCount) => {
     let description = "";
-    if (message[actionKeyCount].toLowerCase().trim() != "tl") {
+    console.log(message[actionKeyCount]);
+    if(message[actionKeyCount] != undefined && message[actionKeyCount].toLowerCase().trim() != "tl"){
         description = message.slice(actionKeyCount);
-    } else {
+        return description.join(" ");
+    } else if(message[actionKeyCount + 1] != undefined ) {
         description = message.slice(actionKeyCount + 1);
+        return description.join(" ");
     }
-    return description.join(" ");
+    return "";
+
 }
 const parsingVar = (typeVar, val) => {
     if (typeVar == "float") {
