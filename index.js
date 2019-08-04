@@ -119,17 +119,20 @@ MongoClient.connect(url, function (err, db) {
         if(msg.text.toLowerCase().includes("/start")){
             sendBotMessage(myobj.chatid,"Hoş Geldiniz "+hitap,opts);
         }else if (msg.text.toLowerCase() == "yardım") {
-            let message = "*// Genel İşlemler //*";
+            let message = "*// Genel İşlemler //*\n";
             message += "*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n";
             message += "*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \n";
-            message += "*// Rapor İşlemleri //*";;
+            message += "\n";
+            message += "*// Rapor İşlemleri //*\n";
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
             message += "*Aylık rapor* ile aylık harcamalarınızı görebilirsiniz.\n";
             message += "*Yıllık rapor* ile yıllık harcamalarınızı görebilirsiniz.\n";
-            message += "*// Sepet İşlemleri //*";;
+            message += "\n";
+            message += "*// Sepet İşlemleri //*\n";
             message += "*Sepet ekle \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize ürün ekleyip kasada süpriz fiyatlar ile karşılaşmazsınız.\n";
             message += "*Sepet çıkar \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize eklediğiniz ürünleri bırakınca fiyattan düşersiniz.\n";
             message += "*Sepet boşalt* ile alışveriş sepetinizi boşatabilirsiniz.\n";
+            message += "\n";
             message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
             sendBotMessage(msg.chat.id, message, opts);
         } else if (msg.text.toLowerCase().includes("sepet") || keys[0].toLowerCase() == "s") {
