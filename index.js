@@ -531,10 +531,7 @@ MongoClient.connect(url, function (err, db) {
             } else if (action == "soyleona") {
                 const who = parsingVar("int", keys[1]);
                 const description = selectDesctription(keys, 1);
-                dbo.collection("customers").find({username: transactionObj.username}).toArray((err, result) => {
-                    //sendBotMessage(result.find(), description);
-
-                })
+                sendBotMessage(who, description);
             } else {
                 sendBotMessage(msg.chat.id, "Konuyu anlayamadım. İsterseniz *Yardım* yazıp yapabileceğim hizmetleri öğrenebilirsiniz.", opts);
             }
