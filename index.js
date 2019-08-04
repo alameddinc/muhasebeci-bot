@@ -261,7 +261,9 @@ MongoClient.connect(url, function (err, db) {
                 //ödeme nakit 150tl araba
                 //const wallet = keys[1];
                 const val = parsingVar("float", keys[1]);
-                const description = selectDesctription(keys, 2);
+                let description = "";
+                description += selectDesctription(keys, 2);
+
 
                 // Adding a spending
                 let totalCount = 0;
@@ -302,10 +304,11 @@ MongoClient.connect(url, function (err, db) {
                     sendBotMessage(myobj.chatid, "Ekledim " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
                 });
 
-            } else if (action == "iade" || action == "ıade" || msg.text.toLowerCase().includes("ade")) {
+            } else if (action == "iade" || action == "İade" || msg.text.toLowerCase().includes("ade")) {
                 let totalCount = 0;
                 const val = parsingVar("float", keys[1]);
-                const description = selectDesctription(keys, 2);
+                let description = "";
+                description += selectDesctription(keys, 2);
 
                 const transactionObj = {
                     username: myobj.username,
