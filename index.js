@@ -121,7 +121,7 @@ MongoClient.connect(url, function (err, db) {
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
             message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
             sendBotMessage(msg.chat.id, message, opts);
-        } else if ((msg.text.toLowerCase()).includes("rapor") || (msg.text.toLowerCase()).includes("harcamalar") || (msg.text.toLowerCase()).includes("listele")) {
+        } else if ((msg.text.toLowerCase()).includes("rapor") || (msg.text.toLowerCase()).includes("harcama") || (msg.text.toLowerCase()).includes("listele")) {
             if((msg.text.toLowerCase()).includes("gun") || (msg.text.toLowerCase()).includes("gün")){
                 const searchObj = {
                     username: myobj.username,
@@ -133,7 +133,11 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
-                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        if(parseFloat(t.amount)<0){
+                            data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
+                        }else if(parseFloat(t.amount)>0){
+                            data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        }
                         total += t.amount;
                     })
                     if (data == "") {
@@ -153,7 +157,11 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
-                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        if(parseFloat(t.amount)<0){
+                            data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
+                        }else if(parseFloat(t.amount)>0){
+                            data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        }
                         total += t.amount;
                     })
                     if (data == "") {
@@ -173,7 +181,11 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
-                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        if(parseFloat(t.amount)<0){
+                            data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
+                        }else if(parseFloat(t.amount)>0){
+                            data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        }
                         total += t.amount;
                     })
                     if (data == "") {
