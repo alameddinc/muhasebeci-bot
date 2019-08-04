@@ -34,7 +34,6 @@ const isToday = (someDate) => {
 }
 const selectDesctription = (message, actionKeyCount) => {
     let description = "";
-    console.log(message[actionKeyCount]);
     if(message[actionKeyCount] != undefined && message[actionKeyCount].toLowerCase().trim() != "tl"){
         description = message.slice(actionKeyCount);
         return description.join(" ");
@@ -137,6 +136,8 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
+                        if(t.description == "")
+                            t.description = "Belirsiz";
                         if(parseFloat(t.amount)<0){
                             data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
                         }else if(parseFloat(t.amount)>0){
@@ -161,6 +162,8 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
+                        if(t.description == "")
+                            t.description = "Belirsiz";
                         if(parseFloat(t.amount)<0){
                             data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
                         }else if(parseFloat(t.amount)>0){
@@ -185,6 +188,8 @@ MongoClient.connect(url, function (err, db) {
                     let data = "";
                     let total = 0;
                     result.map(t => {
+                        if(t.description == "")
+                            t.description = "Belirsiz";
                         if(parseFloat(t.amount)<0){
                             data += (t.description).trim(" ") + " _" + -1*t.amount + "TL *iade*_\n";
                         }else if(parseFloat(t.amount)>0){
