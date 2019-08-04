@@ -113,24 +113,14 @@ MongoClient.connect(url, function (err, db) {
 
         initMessage();
         let keys = msg.text.split(" ");
-        if (msg.text.toLowerCase() == "yardım") {
-            /**
-             * Seviliyorsun Muhasebeci
-             * Borç ekle [Tarih] [Tutar] [Açıklama]
-             * Borç Listele
-             * Borç Öde (Polling)
-             * Ekle
-             * İade
-             * Geri
-             * Yıllık Listele
-             * Aylık Listele
-             * Günlük Listele
-             * Günlük Limit ayarla
-             * Aylık Limit ayarla
-             * Durumum nedir
-             * Yardım
-             */
-            sendBotMessage(msg.chat.id, "*Ödeme \[Tutar\] \[Açıklama\]* ile harcama ekleyebilirsiniz \n*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \nve *günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.", opts);
+        if(msg.text.toLowerCase().includes("/start")){
+            sendBotMessage(myobj.chatid,"Hoş Geldiniz "+hitap,opts);
+        }else if (msg.text.toLowerCase() == "yardım") {
+            let message = "*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n";
+            message += "*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \n";
+            message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
+            message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
+            sendBotMessage(msg.chat.id, message, opts);
         } else if ((msg.text.toLowerCase()).includes("istiyorum") ) {
             if (msg.text.toLowerCase().includes("taksit") && testVersion) {
                 if (msg.text.toLowerCase().includes("görmek") || msg.text.toLowerCase().includes("liste")) {
@@ -156,7 +146,7 @@ MongoClient.connect(url, function (err, db) {
         } else if ((msg.text.toLowerCase()).includes("alameddin") || (msg.text.toLowerCase()).includes("sahib") || (msg.text.toLowerCase()).includes("sahip")) {
             sendBotMessage(msg.chat.id, "Alameddin Çelik'ten mi bahsediyordunuz " + myobj.hitap + " neyse konuyu dağıtmadan yapabileceklerim için daha fazla bilgi almak için *yardım* yazabilirsiniz " + myobj.hitap + " " + emoji.get("blush"), opts);
         } else if (((msg.text.toLowerCase()).includes("merhaba") || (msg.text.toLowerCase()).includes("selam")) && !(msg.text.toLowerCase()).includes("aleyküm")) {
-            sendBotMessage(msg.chat.id, "Hoş Geldiniz " + myobj.hitap + "" + emoji.get("blush"));
+            sendBotMessage(msg.chat.id, "Tekrardan hoş Geldiniz " + myobj.hitap + "" + emoji.get("blush"));
         } else if ((msg.text.toLowerCase()).includes("nasıl") || (msg.text.toLowerCase()).includes("naber")) {
             sendBotMessage(msg.chat.id, "Çok şükür " + myobj.hitap + ", Bir arzunuz mu vardı" + emoji.get("blush"));
         } else if ((msg.text.toLowerCase()).includes("sağol")) {
