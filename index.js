@@ -124,6 +124,88 @@ MongoClient.connect(url, function (err, db) {
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
             message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
             sendBotMessage(msg.chat.id, message, opts);
+        } else if (msg.text.toLowerCase().includes("sepet") || keys[0].toLowerCase() == "s") {
+            if (msg.text.toLowerCase().includes("ekle") || keys[1].toLowerCase() == "e") {
+                const amount = parsingVar("float", keys[2]);
+                const description = selectDesctription(keys, 3);
+                const basketObj = {
+                    username: myobj.username,
+                    amount: amount,
+                    description: description
+                };
+                dbo.collection("baskets").insertOne(basketObj, (err, result) => {
+                    if (err) throw err;
+                })
+                const searchObj = {
+                    username: myobj.username,
+                }
+                let data = "";
+                let total = 0;
+                dbo.collection("baskets").find({username: myobj.username}).toArray((err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.map(t => {
+                            data += t.description + " >> " + t.amount + "TL\n";
+                            total += t.amount;
+                        })
+                        data += hitap + " toplam sepet tutarınız: " + total + "TL'dir."
+                    } else {
+                        data += hitap + " sepette hiç bir ürününüz yok."
+                    }
+
+                    sendBotMessage(myobj.chatid, data, opts)
+                })
+
+
+            } else if (msg.text.toLowerCase().includes("temizle") || msg.text.toLowerCase().includes("sil") || msg.text.toLowerCase().includes("boşalt") || keys[1].toLowerCase() == "t") {
+                const searchObj = {
+                    username: myobj.username,
+                }
+                dbo.collection("baskets").deleteMany({}, (err, result) => {
+                    if (err) throw  err;
+                });
+                sendBotMessage(myobj.chatid, hitap + " sepeti boşalttım, eğer ürünleri satın aldıysanız *Ödeme [Tutar] [Açıklama]* ile harcamanızı ekleyebilirsiniz. İyi Alışverişler diliyorum.")
+            } else if (msg.text.toLowerCase().includes("çıkar") || keys[1].toLowerCase() == "ç" || keys[1].toLowerCase() == "c") {
+                const amount = parsingVar("float", keys[2]);
+                const description = selectDesctription(keys, 3);
+                const basketObj = {
+                    username: myobj.username,
+                    amount: -1 * amount,
+                    description: description
+                };
+                dbo.collection("baskets").insertOne(basketObj, (err, result) => {
+                    if (err) throw err;
+                })
+                const searchObj = {
+                    username: myobj.username,
+                }
+                let data = "";
+                let total = 0;
+                dbo.collection("baskets").find({username: myobj.username}).toArray((err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.map(t => {
+                            if (t.amount > 0) {
+                                data += t.description + " >> " + t.amount + "TL\n";
+                            } else {
+                                data += "Çıkartılan" + " >> " + -1 * t.amount + "TL _iptal_\n";
+                            }
+                            total += t.amount;
+                        })
+                        data += hitap + " toplam sepet tutarınız: " + total + "TL'dir."
+                    } else {
+                        data += hitap + " sepette hiç bir ürününüz yok."
+                    }
+
+                    sendBotMessage(myobj.chatid, data, opts)
+                })
+
+            } else {
+                let message = "Eğer sepete birşeyler eklmeke istiyorsanız *Sepet ekle \[tutar\] \[açıklama\]* veya kısaca *s e \[tutar\]* yazmanız gerekiyor. ";
+                message += "Eğer sepeti boşaltmak istiyorsanız *Sepet temizle* veya kısaca *s t* yazmanız gerekiyor. "
+                message += "İyi alışverişler diliyorum.";
+                sendBotMessage(myobj.chatid, hitap + ", " + message, opts);
+            }
         } else if ((msg.text.toLowerCase()).includes("rapor") || (msg.text.toLowerCase()).includes("harcama") || (msg.text.toLowerCase()).includes("listele")) {
             if((msg.text.toLowerCase()).includes("gun") || (msg.text.toLowerCase()).includes("gün")){
                 const searchObj = {
@@ -232,6 +314,8 @@ MongoClient.connect(url, function (err, db) {
             }
         } else if ((msg.text.toLowerCase()).includes("alameddin") || (msg.text.toLowerCase()).includes("sahib") || (msg.text.toLowerCase()).includes("sahip")) {
             sendBotMessage(msg.chat.id, "Alameddin Çelik'ten mi bahsediyordunuz " + myobj.hitap + " neyse konuyu dağıtmadan yapabileceklerim için daha fazla bilgi almak için *yardım* yazabilirsiniz " + myobj.hitap + " " + emoji.get("blush"), opts);
+        } else if ((msg.text.toLowerCase()).includes("pahalı")) {
+            sendBotMessage(msg.chat.id, "Hayat Pahalı " + myobj.hitap + " " + emoji.get("blush"), opts);
         } else if (((msg.text.toLowerCase()).includes("merhaba") || (msg.text.toLowerCase()).includes("selam")) && !(msg.text.toLowerCase()).includes("aleyküm")) {
             sendBotMessage(msg.chat.id, "Tekrardan hoş Geldiniz " + myobj.hitap + "" + emoji.get("blush"));
         } else if ((msg.text.toLowerCase()).includes("nasıl") || (msg.text.toLowerCase()).includes("naber")) {
