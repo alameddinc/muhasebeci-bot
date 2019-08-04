@@ -365,7 +365,7 @@ MongoClient.connect(url, function (err, db) {
             });
 
 
-        } else if ((msg.text.toLowerCase()).includes("testAccount")) {
+        } else if ((msg.text.toLowerCase()).includes("testaccount")) {
             dbo.collection('customers').find({}).toArray((err, result) => {
                 if (err) throw err;
                 console.log(result)
