@@ -55,10 +55,11 @@ MongoClient.connect(url, function (err, db) {
     var dbo = db.db("mydb");
 
     bot.on('message', (msg) => {
+        let username = msg.from.username == undefined ? msg.chat.id : msg.from.username;
         let myobj = {
             firstname: msg.from.first_name,
             chatid: msg.chat.id,
-            username: msg.from.username,
+            username: username,
             createdDate: dateVal,
             hitap : hitap
         };
@@ -71,7 +72,7 @@ MongoClient.connect(url, function (err, db) {
             }
             bot.sendMessage(chatid, text, opt);
             dbo.collection("messages").insertOne({
-                username: msg.from.username,
+                username: username,
                 direction: 0,
                 text: text,
                 getDate: today.toJSON()
@@ -224,7 +225,7 @@ MongoClient.connect(url, function (err, db) {
                         const description = selectDesctription(keys, 6);
 
                         const installmentObj = {
-                            username: msg.from.username,
+                            username: myobj.username,
                             walletName: wallet,
                             piece: piece,
                             amount: amount,
@@ -297,7 +298,7 @@ MongoClient.connect(url, function (err, db) {
                     if (err) throw err;
                 });
                 const searchObj = {
-                    username: msg.from.username,
+                    username: myobj.username,
                     "createdDate.day" : today.getDay(),
                     "createdDate.month" : today.getMonth(),
                     "createdDate.year" : today.getFullYear(),
@@ -339,7 +340,7 @@ MongoClient.connect(url, function (err, db) {
                 });
 
                 const searchObj = {
-                    username: msg.from.username,
+                    username: myobj.username,
                     "createdDate.day" : today.getDay(),
                     "createdDate.month" : today.getMonth(),
                     "createdDate.year" : today.getFullYear(),
@@ -361,7 +362,7 @@ MongoClient.connect(url, function (err, db) {
                 })
             } else if (action == "günlük" || action == "gunluk") {
                 const searchObj = {
-                    username: msg.from.username,
+                    username: myobj.username,
                     "createdDate.day" : today.getDay(),
                     "createdDate.month" : today.getMonth(),
                     "createdDate.year" : today.getFullYear(),
