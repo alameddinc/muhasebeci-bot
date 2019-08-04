@@ -1,5 +1,5 @@
-ekle + (açıklama zorunluluk kaldır)
-iade + (açıklama zorunluluk kaldır)
+ekle +
+iade +
 günlük rapor +
 aylık rapor
 yıllık rapor

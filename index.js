@@ -121,6 +121,72 @@ MongoClient.connect(url, function (err, db) {
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
             message += "Şu an Beta sürümdür yeni özellikler açılmaya devam edecektir.";
             sendBotMessage(msg.chat.id, message, opts);
+        } else if ((msg.text.toLowerCase()).includes("rapor") || (msg.text.toLowerCase()).includes("harcamalar") (msg.text.toLowerCase()).includes("listele")) {
+            if((msg.text.toLowerCase()).includes("gun") || (msg.text.toLowerCase()).includes("gün")){
+                const searchObj = {
+                    username: myobj.username,
+                    "createdDate.day" : today.getDay(),
+                    "createdDate.month" : today.getMonth(),
+                    "createdDate.year" : today.getFullYear(),
+                };
+                dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
+                    let data = "";
+                    let total = 0;
+                    result.map(t => {
+                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        total += t.amount;
+                    })
+                    if (data == "") {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " hiç işlem yapmamışsınız.", opts);
+                    } else {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " durum şu şekildedir; \n" + data+"*Toplam: " + total + "TL harcamışsınız.*", opts);
+                    }
+                })
+
+            }else if((msg.text.toLowerCase()).includes("ay") ){
+                const searchObj = {
+                    username: myobj.username,
+                    "createdDate.month" : today.getMonth(),
+                    "createdDate.year" : today.getFullYear(),
+                };
+                dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
+                    let data = "";
+                    let total = 0;
+                    result.map(t => {
+                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        total += t.amount;
+                    })
+                    if (data == "") {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " hiç işlem yapmamışsınız.", opts);
+                    } else {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " durum şu şekildedir; \n" + data+"*Toplam: " + total + "TL harcamışsınız.*", opts);
+                    }
+                })
+
+            }else if((msg.text.toLowerCase()).includes("yil") || (msg.text.toLowerCase()).includes("yıl") ){
+                const searchObj = {
+                    username: myobj.username,
+                    "createdDate.month" : today.getMonth(),
+                    "createdDate.year" : today.getFullYear(),
+                };
+                dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
+                    let data = "";
+                    let total = 0;
+                    result.map(t => {
+                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
+                        total += t.amount;
+                    })
+                    if (data == "") {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " hiç işlem yapmamışsınız.", opts);
+                    } else {
+                        sendBotMessage(myobj.chatid, myobj.hitap + " durum şu şekildedir; \n" + data+"*Toplam: " + total + "TL harcamışsınız.*", opts);
+                    }
+                })
+
+            }else{
+                sendBotMessage(myobj.chatid, hitap+" günlük, aylık veya yıllık rapor diye yazabilirsiniz. Şu an söylediğinizi pek anlayamadım. Özür dilerim.", opts);
+            }
+
         } else if ((msg.text.toLowerCase()).includes("istiyorum") ) {
             if (msg.text.toLowerCase().includes("taksit") && testVersion) {
                 if (msg.text.toLowerCase().includes("görmek") || msg.text.toLowerCase().includes("liste")) {
@@ -352,26 +418,6 @@ MongoClient.connect(url, function (err, db) {
                 dbo.collection("customers").find({username: transactionObj.username}).toArray((err, result) => {
                     //sendBotMessage(result.find(), description);
 
-                })
-            } else if (action == "günlük" || action == "gunluk") {
-                const searchObj = {
-                    username: myobj.username,
-                    "createdDate.day" : today.getDay(),
-                    "createdDate.month" : today.getMonth(),
-                    "createdDate.year" : today.getFullYear(),
-                };
-                dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
-                    let data = "";
-                    let total = 0;
-                    result.map(t => {
-                        data += (t.description).trim(" ") + " " + t.amount + "TL\n";
-                        total += t.amount;
-                    })
-                    if (data == "") {
-                        sendBotMessage(myobj.chatid, myobj.hitap + " hiç işlem yapmamışsınız.", opts);
-                    } else {
-                        sendBotMessage(myobj.chatid, myobj.hitap + " durum şu şekildedir; \n" + data+"*Toplam: " + total + "TL harcamışsınız.*", opts);
-                    }
                 })
             } else {
                 sendBotMessage(msg.chat.id, "Konuyu anlayamadım. İsterseniz *Yardım* yazıp yapabileceğim hizmetleri öğrenebilirsiniz.", opts);
