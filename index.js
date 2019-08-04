@@ -119,9 +119,14 @@ MongoClient.connect(url, function (err, db) {
         if(msg.text.toLowerCase().includes("/start")){
             sendBotMessage(myobj.chatid,"Hoş Geldiniz "+hitap,opts);
         }else if (msg.text.toLowerCase() == "yardım") {
-            let message = "*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n";
+            let message = "*// Genel İşlemler //*";
+            message += "*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n";
             message += "*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \n";
+            message += "*// Rapor İşlemleri //*";;
             message += "*Günlük rapor* ile günlük harcamalarınızı görebilirsiniz.\n";
+            message += "*Aylık rapor* ile aylık harcamalarınızı görebilirsiniz.\n";
+            message += "*Yıllık rapor* ile yıllık harcamalarınızı görebilirsiniz.\n";
+            message += "*// Sepet İşlemleri //*";;
             message += "*Sepet ekle \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize ürün ekleyip kasada süpriz fiyatlar ile karşılaşmazsınız.\n";
             message += "*Sepet çıkar \[tutar\] \[açıklama\]* ile alışveriş sırasında sepetinize eklediğiniz ürünleri bırakınca fiyattan düşersiniz.\n";
             message += "*Sepet boşalt* ile alışveriş sepetinizi boşatabilirsiniz.\n";
