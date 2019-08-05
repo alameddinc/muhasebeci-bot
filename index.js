@@ -1,12 +1,13 @@
 //Token
 //const token = '862988372:AAHBh0X5NssHnaJ7eQF3CNCNSVFzkgU5ivM';
 //Telegram bot, Mongo and Emoji
-const keys = require('./dist/keys.js')
+const keys = require('./env/env.js')
 const TelegramBot = require('node-telegram-bot-api');
 const emoji = require('node-emoji');
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
-
+console.log(keys.token)
+console.log(keys.db)
 //Created Bot
 const bot = new TelegramBot(keys.token, {polling: true});
 
