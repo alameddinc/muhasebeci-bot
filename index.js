@@ -56,7 +56,7 @@ const parsingVar = (typeVar, val) => {
 
 MongoClient.connect(url, function (err, db) {
     if (err) throw err;
-    var dbo = db.db("mydb");
+    var dbo = db.db(keys.db);
 
     bot.on('message', (msg) => {
         let username = msg.from.username == undefined ? msg.chat.id : msg.from.username;
