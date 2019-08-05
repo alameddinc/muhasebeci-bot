@@ -1,4 +1,4 @@
 module.exports = {
-    token:  "873520497:AAGENOrfakl1kmFotdxOyg7AoafE8B0QYEo",
+    token:  "862988372:AAHBh0X5NssHnaJ7eQF3CNCNSVFzkgU5ivM",
     db: "mydb",
 }
