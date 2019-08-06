@@ -490,47 +490,50 @@ MongoClient.connect(url, function (err, db) {
 
                 }
             } else if (action == "iade" || action == "İade" || msg.text.toLowerCase().includes("ade")) {
-                let totalCount = 0;
                 const val = parsingVar("float", keys[1]);
-                let description = "";
-                description += selectDesctription(keys, 2);
+                if(isNaN(val)){
+                    sendBotMessage(myobj.chatid,"*İade [Tutar] [Açıklama]* ile iptal ekleyebilirsiniz. \n",opts);
+                }else{
+                    let totalCount = 0;
+                    let description = "";
+                    description += selectDesctription(keys, 2);
 
-                const transactionObj = {
-                    username: myobj.username,
-                    amount: -1 * val,
-                    wallet: "nakit",
-                    createdDate: dateVal
-                };
-                const transactionObjDetails = {
-                    username: myobj.username,
-                    amount: -1 * val,
-                    description: description,
-                    createdDate: dateVal
-                };
-                // Add Transaction
-                dbo.collection("transactions").insertOne(transactionObj, (err, result) => {
-                    if (err) throw err;
-                });
+                    const transactionObj = {
+                        username: myobj.username,
+                        amount: -1 * val,
+                        wallet: "nakit",
+                        createdDate: dateVal
+                    };
+                    const transactionObjDetails = {
+                        username: myobj.username,
+                        amount: -1 * val,
+                        description: description,
+                        createdDate: dateVal
+                    };
+                    // Add Transaction
+                    dbo.collection("transactions").insertOne(transactionObj, (err, result) => {
+                        if (err) throw err;
+                    });
 
-                // Add Transaction
-                dbo.collection("transactionDetails").insertOne(transactionObjDetails, (err, result) => {
-                    if (err) throw err;
-                });
+                    // Add Transaction
+                    dbo.collection("transactionDetails").insertOne(transactionObjDetails, (err, result) => {
+                        if (err) throw err;
+                    });
 
-                const searchObj = {
-                    username: myobj.username,
-                    "createdDate.day" : today.getDay(),
-                    "createdDate.month" : today.getMonth(),
-                    "createdDate.year" : today.getFullYear(),
-                };
+                    const searchObj = {
+                        username: myobj.username,
+                        "createdDate.day" : today.getDay(),
+                        "createdDate.month" : today.getMonth(),
+                        "createdDate.year" : today.getFullYear(),
+                    };
 
-                dbo.collection("transactions").find(searchObj).toArray((err, result) => {
-                    result.map(t => {
-                        totalCount += t.amount
-                    })
-                    sendBotMessage(myobj.chatid, "İade aldım " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
-                });
-
+                    dbo.collection("transactions").find(searchObj).toArray((err, result) => {
+                        result.map(t => {
+                            totalCount += t.amount
+                        })
+                        sendBotMessage(myobj.chatid, "İade aldım " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
+                    });
+                }
             } else if (action == "soyleona") {
                 const who = parsingVar("int", keys[1]);
                 const description = selectDesctription(keys, 1);
