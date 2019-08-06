@@ -440,52 +440,55 @@ MongoClient.connect(url, function (err, db) {
                 }
             }
             else if (action == "ödeme" || action == "odeme") {
-                //ödeme nakit 150tl araba
-                //const wallet = keys[1];
                 const val = parsingVar("float", keys[1]);
-                let description = "";
-                description += selectDesctription(keys, 2);
+
+                if(isNaN(val)){
+                    sendBotMessage(myobj.chatid,"*Ödeme [Tutar] [Açıklama]* ile harcama ekleyebilirsiniz. \n",opts);
+                }else{
+                    let description = "";
+                    description += selectDesctription(keys, 2);
 
 
-                // Adding a spending
-                let totalCount = 0;
-                const transactionObj = {
-                    username: myobj.username,
-                    amount: val,
-                    wallet: "nakit",
-                    createdDate: dateVal
-                };
-                const transactionObjDetails = {
-                    username: myobj.username,
-                    amount: val,
-                    wallet: "nakit",
-                    description: description,
-                    createdDate: dateVal
-                };
-                // Add Transaction
-                dbo.collection("transactions").insertOne(transactionObj, (err, result) => {
-                    if (err) throw err;
-                });
+                    // Adding a spending
+                    let totalCount = 0;
+                    const transactionObj = {
+                        username: myobj.username,
+                        amount: val,
+                        wallet: "nakit",
+                        createdDate: dateVal
+                    };
+                    const transactionObjDetails = {
+                        username: myobj.username,
+                        amount: val,
+                        wallet: "nakit",
+                        description: description,
+                        createdDate: dateVal
+                    };
+                    // Add Transaction
+                    dbo.collection("transactions").insertOne(transactionObj, (err, result) => {
+                        if (err) throw err;
+                    });
 
-                // Add Transaction
-                dbo.collection("transactionDetails").insertOne(transactionObjDetails, (err, result) => {
-                    if (err) throw err;
-                });
-                const searchObj = {
-                    username: myobj.username,
-                    "createdDate.day" : today.getDay(),
-                    "createdDate.month" : today.getMonth(),
-                    "createdDate.year" : today.getFullYear(),
-                };
+                    // Add Transaction
+                    dbo.collection("transactionDetails").insertOne(transactionObjDetails, (err, result) => {
+                        if (err) throw err;
+                    });
+                    const searchObj = {
+                        username: myobj.username,
+                        "createdDate.day" : today.getDay(),
+                        "createdDate.month" : today.getMonth(),
+                        "createdDate.year" : today.getFullYear(),
+                    };
 
-                // List Transactions
-                dbo.collection("transactions").find(searchObj).toArray((err, result) => {
-                    result.map(t => {
-                        totalCount += t.amount
-                    })
-                    sendBotMessage(myobj.chatid, "Ekledim " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
-                });
+                    // List Transactions
+                    dbo.collection("transactions").find(searchObj).toArray((err, result) => {
+                        result.map(t => {
+                            totalCount += t.amount
+                        })
+                        sendBotMessage(myobj.chatid, "Ekledim " + myobj.hitap + ",bu gün toplamda " + totalCount + currentMoney + ' harcama yaptınız.', opts)
+                    });
 
+                }
             } else if (action == "iade" || action == "İade" || msg.text.toLowerCase().includes("ade")) {
                 let totalCount = 0;
                 const val = parsingVar("float", keys[1]);
