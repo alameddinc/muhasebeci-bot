@@ -370,6 +370,23 @@ MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
                 console.log(result)
             })
+        }else if ((msg.text.toLowerCase()).includes("testnan")) {
+            dbo.collection("transactions").deleteMany({amount:NaN}, (err, result) => {
+                if (err) throw  err;
+            });
+            dbo.collection("transactionDetails").deleteMany({amount:NaN}, (err, result) => {
+                if (err) throw  err;
+            });
+        }else if((msg.text.toLowerCase()).includes("testgunluk")){
+            const searchObj = {
+                "createdDate.day" : today.getDay(),
+                "createdDate.month" : today.getMonth(),
+                "createdDate.year" : today.getFullYear(),
+            };
+            dbo.collection("transactionDetails").find(searchObj).toArray((err, result) => {
+                if (err) throw err;
+                console.log(result)
+            });
         } else if (keys.length > 1) {
             const action = keys[0].toLowerCase();
 
