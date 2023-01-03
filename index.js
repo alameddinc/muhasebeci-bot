@@ -1,15 +1,13 @@
 //Token
-//const token = '862988372:AAHBh0X5NssHnaJ7eQF3CNCNSVFzkgU5ivM';
+const token = '862988372:AAHBh0X5NssHnaJ7eQF3CNCNSVFzkgU5ivM';
 //Telegram bot, Mongo and Emoji
-const keys = require('./env/env.js')
 const TelegramBot = require('node-telegram-bot-api');
 const emoji = require('node-emoji');
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
-console.log(keys.token)
-console.log(keys.db)
+
 //Created Bot
-const bot = new TelegramBot(keys.token, {polling: true});
+const bot = new TelegramBot(token, {polling: true});
 
 //OPT for Bold italic text 
 const opts = {
@@ -57,7 +55,7 @@ const parsingVar = (typeVar, val) => {
 
 MongoClient.connect(url, function (err, db) {
     if (err) throw err;
-    var dbo = db.db(keys.db);
+    var dbo = db.db("mydb");
 
     bot.on('message', (msg) => {
         let username = msg.from.username == undefined ? msg.chat.id : msg.from.username;
@@ -367,7 +365,7 @@ MongoClient.connect(url, function (err, db) {
             });
 
 
-        } else if ((msg.text.toLowerCase()).includes("testaccount")) {
+        } else if ((msg.text.toLowerCase()).includes("testAccount")) {
             dbo.collection('customers').find({}).toArray((err, result) => {
                 if (err) throw err;
                 console.log(result)
